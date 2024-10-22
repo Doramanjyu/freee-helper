@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Freee Helper",
   "version": "0.0.0",
-  "description": "Freee helper",
+  "description": "Help Freee login",
   "homepage_url": "https://github.com/Doramanjyu/freee-helper",
   "icons": {
     "32": "icons/32.png",
