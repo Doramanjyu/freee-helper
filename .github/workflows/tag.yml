@@ -1,0 +1,39 @@
+name: tag-release
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.head_commit.message, 'Bump to v')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag
+        id: tag
+        env:
+          MESSAGE: ${{ github.event.head_commit.message }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag=$(echo ${MESSAGE} | cut -f 3 -d " ")
+          echo "tag=${tag}" >> ${GITHUB_OUTPUT}
+          echo Tagging ${tag}
+          gh release create \
+            ${tag} \
+            --generate-notes
+      - name: Upload addon zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          make freee-helper-${{ steps.tag.outputs.tag }}-firefox.zip VERSION_SUFFIX=-${{ steps.tag.outputs.tag }}
+          gh release upload \
+            ${{ steps.tag.outputs.tag }} \
+            freee-helper-${{ steps.tag.outputs.tag }}-firefox.zip
+
+          make freee-helper-${{ steps.tag.outputs.tag }}-chrome.zip VERSION_SUFFIX=-${{ steps.tag.outputs.tag }}
+          gh release upload \
+            ${{ steps.tag.outputs.tag }} \
+            freee-helper-${{ steps.tag.outputs.tag }}-chrome.zip

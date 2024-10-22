@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Freee Helper</title>
+    <style>
+body {
+  text-align: center;
+  max-width: 800px;
+  margin: 10px auto;
+}
+button, input {
+  padding: 0.5em;
+}
+div.warning {
+  border: 2px red dashed;
+  border-radius: 10px;
+  color: red;
+  font-weight: bold;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+section {
+  margin-bottom: 15px;
+  border-top: 2px #ccc solid;
+}
+p {
+  margin: 5px;
+}
+    </style>
+  </head>
+  <body>
+    <h1>Freee Helper Settings</h1>
+    <div class="warning">
+      <p>
+        このaddonを、共用環境や、適切にセキュリティ管理されていない環境等で使用すると、
+        あなたのFreeeアカウントを用いて、他者に不正な操作を実行される恐れがあります。
+        セキュリティに十分な注意を払い、自己責任で使用してください。
+      </p>
+    </div>
+    <section>
+      <h2>セッション有効期間自動延長</h2>
+      <button id="enableLoginKeepalive">Enable login keepalive</button>
+    </section>
+    <section>
+      <h2>TOTP自動入力</h2>
+      <p>
+        ブラウザのローカルストレージにTOTP秘密鍵が保存されます。
+        強い権限をもつユーザでは使用しないことを強く推奨します。
+      </p>
+      <input id="totpSecret" type="password" />
+      <button id="setTotpSecret">Set TOTP secret</button>
+    </section>
+    <script src="/src/settings.js"></script>
+  </body>
+</html>
